@@ -4,10 +4,10 @@
 
 1. Rappels de topologie métrique
 
-* [ ] 1.1. Notion d'espace métrique
-* [ ] 1.2. Notion d'espace vectoriel
-* [ ] 1.3. Suites de Cauchy
-* [ ] 1.4. Continuité
+* [x] 1.1. Notion d'espace métrique
+* [x] 1.2. Notion d'espace vectoriel
+* [x] 1.3. Suites de Cauchy
+* [x] 1.4. Continuité
   
 2. Suites de fonctions et convergences
 
