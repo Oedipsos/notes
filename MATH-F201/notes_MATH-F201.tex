@@ -1,0 +1,340 @@
+\documentclass{report}
+
+\usepackage[margin=3cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+\usepackage{lmodern} % For 'xfrac' fonts
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{xfrac}
+\usepackage{empheq}
+\usepackage{framed}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+\newcommand{\Nepsilon}{N_\varepsilon}
+\newcommand{\reels}{\mathbb{R}}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\rationals}{\mathbb{Q}}
+\newcommand{\complex}{\mathbb{C}}
+
+%\newcounter{thmcount}[subsection]
+
+\makeatletter
+\newcases{function}
+  {\quad}
+  {\hfil$\m@th\displaystyle{##}$\hfil}
+  {\hfil$\m@th\displaystyle{##}$\hfil}
+  {(}{)}
+\makeatother
+
+\theoremstyle{definition}
+\newtheorem{definition}{Définition}
+\newtheorem*{demo}{Démonstration}
+\newtheorem*{example}{Exemple}
+\newtheorem*{examples}{Exemples}
+\newtheorem*{exercice}{Exercice}
+
+\theoremstyle{plain}
+\newtheorem{property}{Propriété}
+\newtheorem{theorem}{Théorème}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remarque}
+\newtheorem*{notation}{Notation}
+\newtheorem*{notations}{Notations}
+
+
+
+\title{
+    MATH-F201 \\
+    Calcul différentiel et intégral \RNum{2}
+}
+
+\author{
+    \underline{Notes de cours}
+}
+
+\date{
+    Année académique 2019-2020
+}
+
+\begin{document}
+\maketitle
+
+\chapter{Rappels de topologie métrique}
+\section{Notion d'espace métrique}
+
+% Définition d'une distance sur X
+\begin{leftbar}
+    \begin{definition}
+        Soit $X$ un ensemble. on appelle \underline{distance sur $X$} toute
+        application $d : X \times X \to \reels^+$ telle que
+        \begin{enumerate}
+            \item{$\forall x, y \in X,\ d(x, y) = d(y, x)$;\hfill
+                \textit{(symétrie)}}
+            \item{$\forall x, y, z \in X,\ d(x, z) \le d(x, y) + d(y, z)$;
+                \hfill\textit{(inégalité triangulaire)}}
+            \item{$\forall x, y \in X,\ (d(x, y) = 0 \iff x = y)$.\hfill
+                \textit{(séparation des points)}}
+        \end{enumerate}
+    \end{definition}
+\end{leftbar}
+
+% Définition d'espace métrique
+\begin{leftbar}
+    \begin{definition}
+        On appelle \underline{espace métrique} tout couple $(X, d)$ d'un
+        ensemble $X$ et d'une distance $d$ sur $X$.
+    \end{definition}
+\end{leftbar}
+
+% Définition de limite/convergence d'une suite
+\begin{leftbar}
+    \begin{definition}
+        Une suite $(x_n)_{n\in\naturals} \in X^\naturals$ \underline{converge}
+        vers $x \in X$ lorsque \\
+        \begin{equation*}
+            \forall \varepsilon < 0,\ \exists\Nepsilon\in\naturals,\ 
+            \forall n \ge\Nepsilon,\ d(x_n, x) < \varepsilon.
+        \end{equation*}
+    \end{definition}
+\end{leftbar}
+
+% Unicité de la limite d'une suite
+\begin{leftbar}
+    \begin{property}
+        Si $(x_n)_{n\in\naturals} \in X^\naturals$ converge vers $x \in X$ 
+        dans l'espace métrique $(X, d)$, alors un tel $x$ est unique, et est
+        appelé limite de la suite $(x_n)_{n\in\naturals}$.
+    \end{property}
+\end{leftbar}
+
+\begin{notations}
+        $\quad x = \lim\limits_{n \to +\infty} {x_n}$, 
+        $\quad x_n \xrightarrow[n \to +\infty]{d} x$\footnotemark
+\end{notations}
+\footnotetext{A lire "$x_n$ tend vers x lorsque $n$ tend vers $\infty$
+    avec la distance $d$" ??}
+
+\newpage
+
+\section{Notion d'espace vectoriel}
+
+% Définition de norme sur un espace vectoriel  
+\begin{leftbar}
+    \begin{definition}
+        Soit $\mathbb{K}$ un sous-corps, et $E$ un $\mathbb{K}$-ev. On appelle
+        \underline{norme sur $E$} toute application $N : E \to \reels^+$ telle
+        que
+        \begin{enumerate}
+            \item{$\forall x\in E,\ \lambda\in\mathbb{K},\ N(\lambda x) = 
+                \lambda N(x)$;\hfill\textit{(homogénéité)}}
+            \item{$\forall x, y \in E,\ N(x+y) \le N(x) + N(y)$;\hfill
+                \textit{(inégalité triangulaire)}}
+            \item{$\forall x\in E,\ (N(x) = 0 \iff x = 0)$.\hfill
+                \textit{(séparation des points\footnotemark)}}
+        \end{enumerate}
+    \end{definition}
+\end{leftbar}
+\footnotetext{caractère \underline{défini} de la norme}
+
+% Définition d'espace vectoriel normé
+\begin{leftbar}
+    \begin{definition}
+        On appelle \underline{espace vectoriel normé} tout couple $(E, N)$
+        d'un espace vectoriel $E$ sur un sous-corps $\mathbb{K}$ et d'une
+        norme $N$ sur $E$.
+    \end{definition}
+\end{leftbar}
+
+% Norme ~> Distance
+\begin{leftbar}
+    \begin{property}
+        Si $(E, N)$ est un espace vectoriel normé, alors
+        \begin{equation*}
+            d_N : \begin{function}
+            E\times E \to\reels^+ \\ 
+            (x, y)\mapsto N(y-x)
+            \end{function} 
+        \end{equation*}
+        est une distance sur $E$. En
+        particulier, $(E, d_N)$ est un espace métrique.
+    \end{property}
+\end{leftbar}
+
+% Définition de série
+\begin{leftbar}
+    \begin{definition}
+        Soit $(E, N)$ un espace vectoriel normé. Soit 
+        $(x_n)_{n\in\naturals} \in X^\naturals$. On appelle \underline{série
+        de terme} \underline{général $(x_n)$} la suite $(S_n)_{n\ge0}$ définie
+        par
+        \begin{equation*}
+           S_n \coloneqq\sum\limits_{i=0}^{n} x_i.
+        \end{equation*}
+        
+    \end{definition}
+\end{leftbar}
+
+% Convergence d'une série
+\begin{exercice}
+    Soit $S \in E$. On dit que la série $(S_n)_{n\ge0}$ de terme général
+    $(u_n)_{n\ge0} \in E^\naturals$ \underline{converge} vers $S$ lorsque
+    \begin{equation*}
+        \forall\varepsilon > 0,\ \exists\Nepsilon\in\naturals,\ \forall n\ge
+        \Nepsilon,\ \begin{cases}
+            d(S_n, S) < \varepsilon \\
+            N(S_n - S) < \varepsilon \\
+            N(\sum\limits_{i=0}^n u_i - S) < \varepsilon
+        \end{cases}
+    \end{equation*}
+    Dans ce cas, $S$ est unique, et vaut $ S = \sum\limits_{i=0}^{+\infty}
+    u_i$.
+\end{exercice}
+
+\begin{examples}
+    \begin{enumerate}
+        \item{$(\reels, |\cdot|)$ est un $\rationals$- et $\reels$-evn.}
+        \item{$(\reels^d, \|\cdot\|_2)$ est un $\rationals$- et $\reels$-evn.}
+        \item{$(\complex, |\cdot|)$ est un $\rationals$-, $\reels$- et
+            $\complex$-evn.}
+        \item{$(\reels^d, \|\cdot\|_p)$ est un $\rationals$- et $\reels$-evn.}
+        \item{$(\complex^d, \|\cdot\|_p)$ est un $\rationals$-, $\reels$- et
+            $\complex$-evn.}
+        \item{$\|(x_1,\dots,n_d)\|_\infty\coloneqq
+            \max\{|x_j|\ |\ j\in \{1,\dots,d\}\}$ est une norme sur $\reels^d$
+            ou $\complex^d$.}
+        \newpage
+        \item{$l^p(N) \coloneqq \{(u_n)_{n\ge0}\in\complex^\naturals\ |\ 
+            \sum\limits_n |u_n|^p < +\infty\}$. \\
+            En posant $ \|(u_n)\|_p \coloneqq \big(\sum\limits_n
+            |u_n|^p\big)^{\sfrac{1}{p}}$, on a que $(l^p(N), \|\cdot\|_p)$
+            est un $\complex$-evn.}
+        \item{$\reels[x] = \{\sum\limits_{n=0}^d a_nx^n \text{ avec }
+        (a_n) \in \reels^\naturals \text{ presque tous nuls }\}$}
+        \item{$([0,1], d(x, y) = |y-x|)$ est un espace métrique.}
+    \end{enumerate}
+\end{examples}
+\newpage
+
+\section{Suites de Cauchy}
+
+\begin{leftbar}
+    \begin{definition}
+        Une suite $(x_n)_{n\ge0}\in X^\naturals$, où $(X, d)$ est un espace
+        métrique, est dite de \underline{Cauchy} lorsque
+        \begin{equation*}
+            \forall\varepsilon > 0,\ \exists\Nepsilon\in\naturals,\ 
+            \forall n, m\ge\Nepsilon,\ d(x_n, x_m) < \varepsilon.
+        \end{equation*}
+    \end{definition}
+\end{leftbar}
+
+\begin{leftbar}
+    \begin{property}
+        Si $(x_n)_{n\ge0}\in X^\naturals$ converge vers $x\in X$ dans l'espace
+        métrique $(X, d)$, alors elle est de Cauchy dans $(X, d)$.
+    \end{property}
+\end{leftbar}
+
+\begin{demo}{exercice}
+\end{demo}
+
+Notons que la réciproque n'est généralement pas vérifiée, d'où la définition
+suivante.
+
+\begin{leftbar}
+    \begin{definition}
+        Soit $(X, d)$ un espace métrique. On dit que $(X, d)$ est
+        \underline{complet} lorsque toute suite de Cauchy converge dans
+        $(X, d)$.
+    \end{definition}
+\end{leftbar}
+
+\begin{examples}
+    \begin{itemize}
+        \item[$*$]{$(\reels, |\cdot|),\ (\reels^d, \|\cdot\|_2),\ 
+            (\complex, |\cdot|),\ (\complex^d, \|\cdot\|_2) $ sont
+            \textbf{\underline{complets}}.}
+        \item[$*$]{$(\reels[x], \|\cdot\|)$ n'est \textbf{
+        \underline{pas complet}}.}
+    \end{itemize}
+\end{examples}
+
+\vspace{1cm}
+\section{Continuité}
+
+\begin{leftbar}
+    \begin{definition}
+        Soient $(X, d_1),\ (Y, d_2)$ deux espaces métriques. Soit
+        $f : X \to Y$, et soit $x\in X$. On dit que $f$ est
+        \underline{continue en $x$} lorsque $\forall y\in X$, 
+        \begin{equation*}
+            \forall\varepsilon > 0,\ \exists\delta > 0,\ 
+            d_1(x, y) < \delta \Rightarrow d_2(f(x), f(y)) < \varepsilon.
+        \end{equation*}
+        $f$ est dite \underline{continue sur $X$} lorsqu'elle est continue
+        en tout $x\in X$. 
+    \end{definition}
+\end{leftbar}
+
+\begin{leftbar}
+    \begin{property}[Caractérisation séquencielle de la continuité]
+        Soient $(X, d_1),\ (Y, d_2)$ deux espaces métriques, $f : X\to Y$
+        et $x\in X$. La fonction $f$ est continue en $x$ si et seulement si
+        pour toute suite $(x_n)_{n\ge0}\in X^\naturals$ convergent vers $x$,
+        la suite $(f(x_n))_{n\ge0} \in Y^\naturals$ converge vers $f(x)$.
+    \end{property}
+\end{leftbar}
+
+\begin{example}
+    Soit $i\in\naturals$. Considérons la fonction 
+    \begin{equation*}
+        c_i : \begin{function}
+            (\reels[x], \|\cdot\|) \to (\reels, |\cdot|) \\
+            P = \sum\limits_k a_kx^k \mapsto a_i
+        \end{function}.
+    \end{equation*}
+    Soit $P = \sum\limits_k a_k x^k$ et $Q = \sum\limits_k b_k x^k$ dans
+    $\reels[x]$. Observons que $c_i(P-Q) = c_i(\sum\limits_k (a_k-b_k) x^k)
+    = a_i-b_i$, donc $|c_i(P) - c_i(Q)| \le \|P-Q\|$.
+    Si $P$ est fixé dans $\reels[x]$ et $(Q_n)_{n\in\naturals} \in (\reels[x])
+    ^\naturals$ avec $ Q_n \xrightarrow[n\to+\infty]{\|\cdot\|} P$, alors
+    $c_i(Q) \xrightarrow[n\to+\infty]{|\cdot|}  c_i(P)$.
+
+    Ainsi, $c_i$ est continue en tout $P\in\reels[x]$.
+    Donc $c_i$ est continue sur $\reels[x]$
+\end{example}
+
+    Posons pour $n\ge1$, $P_n = \sum\limits_{k=0}^n \frac{1}{k!}x^k$.
+    Observons que, pour $n > m \ge 1$, on a
+    \begin{align*}
+        \|P_n-P_m\| &= \left\|\sum\limits_{k=0}^n \frac{1}{k!}x^k - \sum
+        \limits_{k=0}^m \frac{1}{k!}x^k\right\| \\
+        &= \left\|\sum\limits_{k=m+1}^n \frac{1}{k!}x^k \right\| \\ 
+        &= \frac{1}{(m+1)!}
+    \end{align*}
+    Avec $\|P\| = \max\limits_{k\in\naturals} |a_k|$. \\
+    On en déduit que $(P_n)_{n\ge0}$ est de Cauchy dans $(\reels[x],
+    \|\cdot\|)$.
+    \paragraph{}
+    Raisonnons par l'absurde et supposons qu'il existe $P\in\reels[x]$ tel que
+    $P_n \xrightarrow[n\to+\infty]{\|\cdot\|} P$. Alors pour tout $i\in
+    \naturals$, on a $c_i(P_n) \xrightarrow[n\to+\infty]{|\cdot|} c_i(P)$ par
+    continuité de $c_i$ en $P$.
+
+    Ainsi, $\forall i\in\naturals,\ c_i(P) = \frac{1}{i!}$\hfill(Contradiction
+    avec $P\in\reels[x]$ !)
+    \paragraph{}
+    Donc $(P_n)$ ne converge pas, et $(\reels[x], \|\cdot\|)$ n'est pas
+    complet !
+\end{example}
+
+\chapter{Suites de fonctions - Convergences}
+
+\end{document}
